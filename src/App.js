@@ -9,11 +9,22 @@ const API_URL = 'https://api.quotable.io/random'
 function App() {
   const [quote, setQuote] = useState({})
   const [loading, setLoading] = useState(true)
+  const [randomBg, setRandomBg] = useState('rgb(28, 28, 28)')
+
+  const generateRandomBg = () => {
+    var x = Math.floor(Math.random() * 256)
+    var y = Math.floor(Math.random() * 256)
+    var z = Math.floor(Math.random() * 256)
+    var bgColor = 'rgb(' + x + ',' + y + ',' + z + ')'
+    setRandomBg(bgColor)
+  }
 
   const generateQuote = async () => {
     try {
       const res = await axios.get(API_URL)
       setQuote(res.data)
+      generateRandomBg()
+      document.body.style.backgroundColor = randomBg
       setLoading(false)
     } catch (error) {
       setLoading(false)
